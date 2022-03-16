@@ -36,7 +36,24 @@ RSpec.describe '/api/reviews' do
   describe 'GET to /:id' do
     context 'when found' do
       it 'returns a book review' do
-        
+        review = create(:review)
+
+        get api_reviews_path(review)
+
+        expect(Review.count).to eq(1)
+        expect(response_hash).to eq(
+          [
+            {
+              book_id: review.book_id,
+              user_id: review.user_id,
+              created_at: review.created_at.iso8601(3),
+              rating: review.rating,
+              id: review.id,
+              description: review.description,
+              updated_at: review.updated_at.iso8601(3)
+            }
+          ]
+        )
       end
     end
   end
