@@ -15,6 +15,8 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 6.2'
   gem 'faker', '~> 2.18'
   gem 'rspec-rails', '~> 5.0.0'
+  # I'm using 'pry' as my debug tool
+  gem 'pry'
 end
 
 group :development do
