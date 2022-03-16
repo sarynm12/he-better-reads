@@ -32,4 +32,12 @@ RSpec.describe '/api/reviews' do
       )
     end
   end
+
+  describe 'GET to /:id' do
+    context 'when found' do
+      it 'returns a book review' do
+        
+      end
+    end
+  end
 end
