@@ -35,5 +35,17 @@ RSpec.describe '/api/books/reviews' do
         ]
       )
     end
+
+    it 'alerts the user if a book does not have any reviews' do
+      book = create(:book)
+
+      get api_book_reviews_path(book)
+
+      expect(response_hash).to eq(
+        {
+          message: 'This book has no reviews'
+        }
+      )
+    end
   end
 end

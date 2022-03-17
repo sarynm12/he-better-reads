@@ -3,7 +3,11 @@ module API
     class ReviewsController < ApplicationController
       def index
         book = Book.find(params[:book_id])
-        render json: book.reviews
+        if book.reviews.empty?
+          render json: { message: 'This book has no reviews' }
+        else
+          render json: book.reviews
+        end
       end
     end
   end
