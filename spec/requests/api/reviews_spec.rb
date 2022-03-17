@@ -137,4 +137,28 @@ RSpec.describe '/api/reviews' do
       end
     end
   end
+
+  describe 'PUT to /:id' do
+    let(:review) { create(:review) }
+
+    context 'when successful' do
+      let(:params) do
+        {
+          description: 'I read this book in 2 days. Amazing'
+        }
+      end
+
+      it 'updates an existing review' do
+        put api_review_path(review), params: params
+
+        expect(review.reload.description).to eq(params[:description])
+      end
+
+      it 'returns the updated review' do
+        put api_review_path(review), params: params
+
+        expect(response_hash).to include(params)
+      end
+    end
+  end
 end
