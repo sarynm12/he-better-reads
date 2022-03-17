@@ -8,6 +8,16 @@ module API
       render json: Review.find(params[:id])
     end
 
+    def create
+      review = Review.new(allowed_params)
+
+      if review.save
+        render json: review
+      else
+        render json: { errors: review.errors.full_messages }
+      end
+    end
+
     private
 
     def allowed_params

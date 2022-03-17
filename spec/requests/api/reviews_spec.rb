@@ -63,4 +63,32 @@ RSpec.describe '/api/reviews' do
       end
     end
   end
+
+  describe 'POST to /' do
+    context 'when successful' do
+      let(:user) { create(:user) }
+
+      let(:book) { create(:book) }
+
+      let(:review) { create(:review) }
+      let(:params) do
+        {
+          user_id: user.id,
+          book_id: book.id,
+          rating: 2,
+          description: 'I had higher expectations for this book'
+        }
+      end
+      
+      it 'creates a review' do
+        expect { post api_reviews_path, params: params }.to change { Review.count }
+      end
+
+      it 'returns the created review' do
+        post api_reviews_path, params: params
+
+        expect(response_hash).to include(params)
+      end
+    end
+  end
 end
