@@ -208,5 +208,23 @@ RSpec.describe '/api/reviews' do
         expect(response_hash).to include(params)
       end
     end
+
+    context 'when unsuccessful' do
+      let(:params) do
+        {
+          rating: ''
+        }
+      end
+
+      it 'returns an error' do
+        put api_review_path(review), params: params
+
+        expect(response_hash).to eq(
+          {
+            errors: ['Rating can\'t be blank', 'Rating is not a number']
+          }
+        )
+      end
+    end
   end
 end
