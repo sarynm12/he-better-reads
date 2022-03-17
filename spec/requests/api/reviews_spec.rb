@@ -115,7 +115,7 @@ RSpec.describe '/api/reviews' do
       end
     end
 
-    context 'when missing a user' do
+    context 'when unsuccessful' do
       let(:book) { create(:book) }
 
       let(:params) do
@@ -127,7 +127,7 @@ RSpec.describe '/api/reviews' do
         }
       end
 
-      it 'returns an error' do
+      it 'returns an error if user is missing' do
         post api_reviews_path, params: params
 
         expect(response_hash).to eq(
@@ -138,7 +138,7 @@ RSpec.describe '/api/reviews' do
       end
     end
 
-    context 'when missing a book' do
+    context 'when unsuccessful' do
       let(:user) { create(:user) }
 
       let(:params) do
@@ -150,7 +150,7 @@ RSpec.describe '/api/reviews' do
         }
       end
 
-      it 'returns an error' do
+      it 'returns an error if book is missing' do
         post api_reviews_path, params: params
 
         expect(response_hash).to eq(
@@ -161,7 +161,7 @@ RSpec.describe '/api/reviews' do
       end
     end
 
-    context 'when a rating is greater than 5' do
+    context 'when unsuccessful' do
       let(:user) { create(:user) }
       let(:book) { create(:book) }
 
@@ -174,7 +174,7 @@ RSpec.describe '/api/reviews' do
         }
       end
 
-      it 'returns an error' do
+      it 'returns an error if rating is greater than 5' do
         post api_reviews_path, params: params
         
         expect(response_hash).to eq(
@@ -185,7 +185,7 @@ RSpec.describe '/api/reviews' do
       end
     end
 
-    context 'when a rating is less than 1' do
+    context 'when unsuccessful' do
       let(:user) { create(:user) }
       let(:book) { create(:book) }
 
@@ -198,7 +198,7 @@ RSpec.describe '/api/reviews' do
         }
       end
 
-      it 'returns an error' do
+      it 'returns an error if rating is less than 1' do
         post api_reviews_path, params: params
         
         expect(response_hash).to eq(
