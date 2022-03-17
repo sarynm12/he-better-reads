@@ -208,6 +208,32 @@ RSpec.describe '/api/reviews' do
         )
       end
     end
+
+    context 'when unsuccessful' do
+      let(:user) { create(:user) }
+      let(:book) { create(:book) }
+
+      let(:params) do
+        {
+          rating: 2,
+          description: 'Book is okay',
+          user_id: user.id,
+          book_id: book.id
+        }
+      end
+
+      it 'only allows a user to submit one review per book' do
+         expect { post api_reviews_path, params: params }.to change { Review.count }
+
+         post api_reviews_path, params: params
+
+         expect(response_hash).to eq(
+           {
+             errors: ['Book you\'ve already reviewed']
+           }
+         )
+      end
+    end
   end
 
   describe 'PUT to /:id' do
