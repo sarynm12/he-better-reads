@@ -90,5 +90,51 @@ RSpec.describe '/api/reviews' do
         expect(response_hash).to include(params)
       end
     end
+
+    context 'when missing a user' do
+      let(:book) { create(:book) }
+
+      let(:params) do
+        {
+          rating: 4,
+          description: 'Best book ever',
+          book_id: book.id,
+          user_id: -1
+        }
+      end
+
+      it 'returns an error' do
+        post api_reviews_path, params: params
+
+        expect(response_hash).to eq(
+          {
+            errors: ['User must exist']
+          }
+        )
+      end
+    end
+
+    context 'when missing a book' do
+      let(:user) { create(:user) }
+
+      let(:params) do
+        {
+          rating: 1,
+          description: 'Worst book ever',
+          user_id: user.id,
+          book_id: -1
+        }
+      end
+
+      it 'returns an error' do
+        post api_reviews_path, params: params
+
+        expect(response_hash).to eq(
+          {
+            errors: ['Book must exist']
+          }
+        )
+      end
+    end
   end
 end
