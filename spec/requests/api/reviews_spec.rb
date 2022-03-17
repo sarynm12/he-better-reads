@@ -136,6 +136,54 @@ RSpec.describe '/api/reviews' do
         )
       end
     end
+
+    context 'when a rating is greater than 5' do
+      let(:user) { create(:user) }
+      let(:book) { create(:book) }
+
+      let(:params) do
+        {
+          rating: 8,
+          description: 'Love this book',
+          user_id: user.id,
+          book_id: book.id
+        }
+      end
+
+      it 'returns an error' do
+        post api_reviews_path, params: params
+        
+        expect(response_hash).to eq(
+          {
+            errors: ['Rating must be less than or equal to 5']
+          }
+        )
+      end
+    end
+
+    context 'when a rating is less than 1' do
+      let(:user) { create(:user) }
+      let(:book) { create(:book) }
+
+      let(:params) do
+        {
+          rating: 0,
+          description: 'Hate this book',
+          user_id: user.id,
+          book_id: book.id
+        }
+      end
+
+      it 'returns an error' do
+        post api_reviews_path, params: params
+        
+        expect(response_hash).to eq(
+          {
+            errors: ['Rating must be greater than or equal to 1']
+          }
+        )
+      end
+    end
   end
 
   describe 'PUT to /:id' do
