@@ -91,6 +91,30 @@ RSpec.describe '/api/reviews' do
       end
     end
 
+    context 'when description field is blank' do
+      let(:user) { create(:user) }
+      let(:book) { create(:book) }
+
+      let(:params) do
+        {
+          rating: 3,
+          description: '',
+          user_id: user.id,
+          book_id: book.id 
+        }
+      end
+
+      it 'still creates a review' do
+        expect { post api_reviews_path, params: params }.to change { Review.count }
+      end
+
+      it 'returns the created review without a description' do
+        post api_reviews_path, params: params
+
+        expect(response_hash).to include(params)
+      end
+    end
+
     context 'when missing a user' do
       let(:book) { create(:book) }
 
