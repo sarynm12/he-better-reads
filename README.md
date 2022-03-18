@@ -1,3 +1,11 @@
+# My Work
+
+- Thanks for taking a look at my code! I completed the challenge requirements, along with one stretch goal. At a high level, my addition was creating a database table for reviews. A review belongs to both a user, and a book. There's always room to add more tests, but hopefully what I have here includes detailed-enough tests.
+
+- Reach out with any questions that come up. Happy to provide a more detailed breakdown of my overall approach. Thank you, again!
+
+
+
 # Dependencies
 
 1. Ruby 2.7.3
