@@ -234,6 +234,31 @@ RSpec.describe '/api/reviews' do
          )
       end
     end
+
+    context 'when unsuccessful(stretch goal)' do
+      let(:user) { create(:user) }
+      let(:book) { create(:book) }
+
+      let(:params) do
+        {
+          rating: 2,
+          description: 'What the frak is this book?',
+          user_id: user.id,
+          book_id: book.id
+        }
+      end
+
+      it 'will not allow user to submit a review containing fictional profanity' do
+        post api_reviews_path, params: params
+
+        expect(Review.count).to eq(0)
+        expect(response_hash).to eq(
+          {
+            errors: 'Review deleted due to use of profanity'
+          }
+        )
+      end
+    end
   end
 
   describe 'PUT to /:id' do

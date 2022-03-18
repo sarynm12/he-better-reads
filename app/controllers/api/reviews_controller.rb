@@ -10,8 +10,11 @@ module API
 
     def create
       review = Review.new(allowed_params)
-
-      if review.save
+      profanity = ['frak', 'storms', 'gorram', 'nerfherder, crivens']
+      if profanity.any? { |word| review.description.include?(word) }
+        review.destroy
+        render json: { errors: 'Review deleted due to use of profanity' }
+      elsif review.save
         render json: review
       else
         render json: { errors: review.errors.full_messages }
