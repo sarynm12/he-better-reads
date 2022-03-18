@@ -11,4 +11,8 @@ class Review < ApplicationRecord
   def self.sorted(order = "DESC")
     order(rating: order)
   end
+
+  def self.descriptive_ratings
+    where.not(description: nil)
+  end
 end

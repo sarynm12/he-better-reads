@@ -2,7 +2,11 @@ module API
   module Reviews
     class SearchController < ApplicationController
       def index
-        reviews = Review.sorted(params[:sort])
+        if params.keys.first == "descriptive"
+          reviews = Review.descriptive_ratings
+        elsif params.keys.first == "sort"
+          reviews = Review.sorted(params[:sort])
+        end
         render json: reviews
       end
 
